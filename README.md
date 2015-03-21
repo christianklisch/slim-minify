@@ -6,11 +6,18 @@ beetween html-tags to reduce traffic. This script is a summary of stackoverflow 
 
 ## Usage
 
-Copy the file Minify.php to 'Slim/Extras/Middleware/'. Register minify via $app->add():
+Copy the file Minify.php to 'Slim/Middleware/'. Register minify via $app->add():
 
 ```php
 $app = new \Slim\Slim(.....));
-$app->add(new \Slim\Extras\Middleware\Minify() );
+$app->add(new \Slim\Middleware\Minify() );
+```
+
+or use the composer:
+```
+    "require": {
+        "christianklisch/slim-minify": "0.1"
+    }
 ```
 
 ## Contributors

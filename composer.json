@@ -1,0 +1,20 @@
+{
+    "name": "christianklisch/slim-minify",
+    "description": "Minify html output in slim framework",
+    "keywords": ["php","minify","html"],
+    "homepage": "https://github.com/christianklisch/slim-minify",
+    "authors": [{
+            "name": "Christian Klisch",
+            "homepage": "http://www.christian-klisch.de/"
+        }
+    ],
+    "license": "MIT",
+    "require": {
+        "php": ">=5.0.0",
+        "slimphp/slim": ">=2.5.0"
+    },
+	"autoload": {
+	    "psr-4": { "\\": "src/" }
+	},
+
+}
