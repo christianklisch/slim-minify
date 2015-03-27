@@ -24,7 +24,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-namespace Slim\Extras\Middleware;
+namespace Slim\Middleware;
 
 /**
  * Minify-Middleware is a summary of stackoverflow answers to reduce html traffic
