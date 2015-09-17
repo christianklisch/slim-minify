@@ -16,7 +16,7 @@ $app->add(new \Slim\Middleware\Minify() );
 or use the composer:
 ```
     "require": {
-        "christianklisch/slim-minify": "0.4.2"
+        "christianklisch/slim-minify": "0.4.3"
     }
 ```
 
