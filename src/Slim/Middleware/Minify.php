@@ -38,7 +38,7 @@ class Minify extends \Slim\Middleware
 		$this->next->call();
 
 		$res  = $app->response();
-		$squeezedHTML = $res->body();
+		$body = $res->body();
 
 		$search = array('/\n/','/\>[^\S ]+/s','/[^\S ]+\</s','/(\s)+/s');
 		$replace = array(' ','>','<','\\1');
