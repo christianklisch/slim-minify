@@ -40,7 +40,7 @@ class Minify extends \Slim\Middleware
 		$res  = $app->response();
 		$body = $res->body();
 
-		$search = array('/(?:(?:\/\*(?:[^*]|(?:\*+[^*\/]))*\*+\/)|(?:(?<!\:|\\\|\')\/\/.*))/', '/\n/','/\>[^\S ]+/s','/[^\S ]+\</s','/(\s)+/s');
+		$search = array('/(?:(?:\/\*(?:[^*]|(?:\*+[^*\/]))*\*+\/)|(?:(?<!\:|\\\|\'|\")\/\/.*))/', '/\n/','/\>[^\S ]+/s','/[^\S ]+\</s','/(\s)+/s');
 		$replace = array(' ', ' ','>','<','\\1');
 
 		$squeezedHTML = preg_replace($search, $replace, $body);
