@@ -28,7 +28,7 @@ namespace Slim\Middleware;
 
 /**
  * Minify-Middleware is a summary of stackoverflow answers to reduce html traffic
- * by remove whitespaces, tabs and empty lines.
+ * by removing whitespaces, tabs, empty lines and comments.
  * */
 class Minify extends \Slim\Middleware
 {
@@ -40,8 +40,8 @@ class Minify extends \Slim\Middleware
 		$res  = $app->response();
 		$body = $res->body();
 
-		$search = array('/(?:(?:\/\*(?:[^*]|(?:\*+[^*\/]))*\*+\/)|(?:(?<!\:|\\\|\'|\")\/\/.*))/', '/\n/','/\>[^\S ]+/s','/[^\S ]+\</s','/(\s)+/s');
-		$replace = array(' ', ' ','>','<','\\1');
+		$search = array('/(?:(?:\/\*(?:[^*]|(?:\*+[^*\/]))*\*+\/)|(?:(?<!\:|\\\|\')\/\/.*))/', '/\n/', '/\>[^\S ]+/s', '/[^\S ]+\</s', '/(\s)+/s', '/<!--.*?-->/');
+		$replace = array(' ', ' ', '>', '<', '\\1', '');
 
 		$squeezedHTML = preg_replace($search, $replace, $body);
 
