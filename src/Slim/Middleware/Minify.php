@@ -30,7 +30,7 @@ namespace Slim\Middleware;
  * Minify-Middleware is a summary of stackoverflow answers to reduce html traffic
  * by removing whitespaces, tabs, empty lines and comments.
  * */
-class Minify extends \Slim\Middleware
+class Minify
 {
 	public function call()
 	{
