@@ -9,7 +9,7 @@ beetween html-tags and comments to reduce traffic. This script is a summary of s
 Copy the file Minify.php to 'Slim/Middleware/'. Register minify via $app->add():
 
 ```php
-$app = new \Slim\Slim(.....));
+$app = new \Slim\App(....);
 $app->add(new \Slim\Middleware\Minify() );
 ```
 
