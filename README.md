@@ -18,7 +18,6 @@ or use the composer:
 
 in 'src/middleware.php':
 ```php
-$app = new \Slim\App(....);
 $app->add(new \Slim\Middleware\Minify() );
 ```
 
