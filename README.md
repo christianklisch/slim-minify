@@ -8,16 +8,18 @@ beetween html-tags and comments to reduce traffic. This script is a summary of s
 
 Copy the file Minify.php to 'Slim/Middleware/'. Register minify via $app->add():
 
-```php
-$app = new \Slim\App(....);
-$app->add(new \Slim\Middleware\Minify() );
-```
 
 or use the composer:
 ```
     "require": {
-        "christianklisch/slim-minify": "0.4.5"
+        "christianklisch/slim-minify": "0.5.0"
     }
+```
+
+in 'src/middleware.php':
+```php
+$app = new \Slim\App(....);
+$app->add(new \Slim\Middleware\Minify() );
 ```
 
 ## Contributors
