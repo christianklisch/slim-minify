@@ -25,28 +25,56 @@ SOFTWARE.
 */
 
 namespace Slim\Middleware;
+use Psr\Http\Message\ServerRequestInterface as Request;
+use Psr\Http\Message\ResponseInterface as Response;
+use Slim\Http\Body;
 
 /**
  * Minify-Middleware is a summary of stackoverflow answers to reduce html traffic
  * by removing whitespaces, tabs, empty lines and comments.
  * */
-class Minify extends \Slim\Middleware
+class Minify
 {
-	public function call()
-	{
-		$app  = $this->app;
-		$this->next->call();
+    /**
+     * minify html content
+     *
+     * @param string $html
+     * @return string
+     */
+    private function minifyHTML($html)
+    {
+        $search = array('/(?:(?:\/\*(?:[^*]|(?:\*+[^*\/]))*\*+\/)|(?:(?<!\:|\\\|\'|\")\/\/.*))/', '/\n/', '/\>[^\S ]+/s', '/[^\S ]+\</s', '/(\s)+/s', '/<!--.*?-->/');
+        $replace = array(' ', ' ', '>', '<', '\\1', '');
 
-		$res  = $app->response();
-		$body = $res->body();
+        $squeezedHTML = preg_replace($search, $replace, $html);
 
-		$search = array('/(?:(?:\/\*(?:[^*]|(?:\*+[^*\/]))*\*+\/)|(?:(?<!\:|\\\|\'|\")\/\/.*))/', '/\n/', '/\>[^\S ]+/s', '/[^\S ]+\</s', '/(\s)+/s', '/<!--.*?-->/');
-		$replace = array(' ', ' ', '>', '<', '\\1', '');
+        return $squeezedHTML;
 
-		$squeezedHTML = preg_replace($search, $replace, $body);
+    }
 
-		$res->body($squeezedHTML);
-	}
+    /**
+     * @param Request $request
+     * @param Response $response
+     * @param callable $next
+     * @return static
+     */
+    public function __invoke(Request $request, Response $response,callable $next)
+    {
+        $next($request,$response);
+
+
+        $oldBody = $response->getBody();
+
+        $minifiedBodyContent = $this->minifyHTML((string)$oldBody);
+
+
+        $newBody = new Body(fopen('php://temp', 'r+'));
+
+        //write the minified html content to the new \Slim\Http\Body instance
+        $newBody->write($minifiedBodyContent);
+
+        return $response->withBody($newBody);
+
+    }
 }
 
-?>
