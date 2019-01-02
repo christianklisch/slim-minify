@@ -60,7 +60,7 @@ class Minify
      */
     public function __invoke(Request $request, Response $response,callable $next)
     {
-        $next($request,$response);
+        $response = $next($request,$response);
 
 
         $oldBody = $response->getBody();
