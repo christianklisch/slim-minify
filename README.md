@@ -12,7 +12,7 @@ Copy the file Minify.php to 'Slim/Middleware/'. Register minify via $app->add():
 or use the composer:
 ```
     "require": {
-        "christianklisch/slim-minify": "0.5.0"
+        "christianklisch/slim-minify": "0.6.0"
     }
 ```
 
