@@ -36,6 +36,13 @@ use Slim\Http\Body;
  * */
 class Minify
 {
+    private $shouldMinify;
+
+    public function __construct($shouldMinify = true)
+    {
+        $this->shouldMinify = !empty($shouldMinify);
+    }
+
     /**
      * minify html content
      *
@@ -60,6 +67,9 @@ class Minify
     {
         $response = $next($request, $response);
 
+        if (!$this->shouldMinify) {
+            return $response;
+        }
 
         $oldBody = $response->getBody();
 
@@ -74,4 +84,3 @@ class Minify
         return $response->withBody($newBody);
     }
 }
-
