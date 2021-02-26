@@ -23,7 +23,7 @@ $app->add(new \Slim\Middleware\Minify() );
 
 ## Contributors
 
-* Christian Klisch http://www.christian-klisch.de
+* Christian Klisch https://www.christian-klisch.de
 
 
 ## Copyright and license
