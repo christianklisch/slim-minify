@@ -25,8 +25,9 @@ SOFTWARE.
 */
 
 namespace Slim\Middleware;
-use Psr\Http\Message\ServerRequestInterface as Request;
+
 use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Http\Body;
 
 /**
@@ -35,6 +36,13 @@ use Slim\Http\Body;
  * */
 class Minify
 {
+    private $shouldMinify;
+
+    public function __construct($shouldMinify = true)
+    {
+        $this->shouldMinify = !empty($shouldMinify);
+    }
+
     /**
      * minify html content
      *
@@ -43,13 +51,10 @@ class Minify
      */
     private function minifyHTML($html)
     {
-        $search = array('/(?:(?:\/\*(?:[^*]|(?:\*+[^*\/]))*\*+\/)|(?:(?<!\:|\\\|\'|\")\/\/.*))/', '/\n/', '/\>[^\S ]+/s', '/[^\S ]+\</s', '/(\s)+/s', '/<!--.*?-->/');
-        $replace = array(' ', ' ', '>', '<', '\\1', '');
+        $search = ['/(?:(?:\/\*(?:[^*]|(?:\*+[^*\/]))*\*+\/)|(?:(?<!\:|\\\|\'|\")\/\/.*))/', '/\n/', '/\>[^\S ]+/s', '/[^\S ]+\</s', '/(\s)+/s', '/<!--.*?-->/'];
+        $replace = [' ', ' ', '>', '<', '\\1', ''];
 
-        $squeezedHTML = preg_replace($search, $replace, $html);
-
-        return $squeezedHTML;
-
+        return preg_replace($search, $replace, $html);
     }
 
     /**
@@ -58,10 +63,13 @@ class Minify
      * @param callable $next
      * @return static
      */
-    public function __invoke(Request $request, Response $response,callable $next)
+    public function __invoke(Request $request, Response $response, callable $next)
     {
-        $response = $next($request,$response);
+        $response = $next($request, $response);
 
+        if (!$this->shouldMinify) {
+            return $response;
+        }
 
         $oldBody = $response->getBody();
 
@@ -74,7 +82,5 @@ class Minify
         $newBody->write($minifiedBodyContent);
 
         return $response->withBody($newBody);
-
     }
 }
-
