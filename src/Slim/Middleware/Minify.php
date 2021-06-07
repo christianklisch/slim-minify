@@ -26,9 +26,9 @@ SOFTWARE.
 
 namespace Slim\Middleware;
 
-use Psr\Http\Message\ResponseInterface as Response;
-use Psr\Http\Message\ServerRequestInterface as Request;
-use Slim\Http\Body;
+use \Psr\Http\Message\ResponseInterface as Response;
+use \Psr\Http\Message\ServerRequestInterface as Request;
+use \Psr\Http\Server\RequestHandlerInterface as RequestHandler;
 
 /**
  * Minify-Middleware is a summary of stackoverflow answers to reduce html traffic
@@ -63,9 +63,9 @@ class Minify
      * @param callable $next
      * @return static
      */
-    public function __invoke(Request $request, Response $response, callable $next)
+    public function __invoke(Request $request, RequestHandler $handler): Response
     {
-        $response = $next($request, $response);
+        $response = $handler->handle($request);
 
         if (!$this->shouldMinify) {
             return $response;
@@ -76,7 +76,7 @@ class Minify
         $minifiedBodyContent = $this->minifyHTML((string)$oldBody);
 
 
-        $newBody = new Body(fopen('php://temp', 'r+'));
+        $newBody = new \Slim\Psr7\Stream(fopen('php://temp', 'r+'));
 
         //write the minified html content to the new \Slim\Http\Body instance
         $newBody->write($minifiedBodyContent);
