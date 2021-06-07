@@ -59,9 +59,8 @@ class Minify
 
     /**
      * @param Request $request
-     * @param Response $response
-     * @param callable $next
-     * @return static
+     * @param RequestHandler $handler
+     * @return Response
      */
     public function __invoke(Request $request, RequestHandler $handler): Response
     {
